@@ -19,7 +19,11 @@ module ForemanSalt
         button_group(
           if host.try(:salt_proxy)
             link_to_if_authorized(_('Run Salt'), { :controller => :'foreman_salt/minions', :action => :run, :id => host },
-                                  :title => _('Trigger a state.highstate run on a node'))
+                                  :title => _('Trigger a state.apply run on a node'), :id => "run-salt-button", :class => 'btn btn-default')
+          end,
+          if host.try(:salt_proxy)
+            link_to_if_authorized(_('Dry run Salt'), { :controller => :'foreman_salt/minions', :action => :dry_run, :id => host, :test => true },
+                                  :title => _("Trigger a state.apply run on a node with test option"), :id => "dry-run-salt-button", :class => 'btn btn-default')
           end
         )
       )
